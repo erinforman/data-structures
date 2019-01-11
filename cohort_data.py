@@ -47,17 +47,49 @@ def sort_by_cohort(filename):
     >>> sort_by_cohort("cohort_data.txt")
     [['Harry Potter', 'Mandy Brocklehurst', 'Ron Weasley', 'Oliver Wood', 'Colin Creevey', 'Cho Chang', 'Michael Corner', 'Draco Malfoy', 'Seamus Finnigan', 'Eddie Carmichael', 'Theodore Nott', 'Terence Higgs', 'Hermione Granger', 'Penelope Clearwater', 'Angelina Johnson', 'Dennis Creevey'], ['Neville Longbottom', 'Cedric Diggory', 'Pansy Parkinson', 'Anthony Goldstein', 'Padma Patil', 'Luna Lovegood', 'Eleanor Branstone', 'Lee Jordan', 'Marietta Edgecombe', 'Andrew Kirke', 'Ginny Weasley', 'Mary Macdonald', 'Blaise Zabini', 'Natalie McDonald', 'Adrian Pucey', 'Hannah Abbott', 'Graham Pritchard', 'Susan Bones', 'Roger Davies', 'Owen Cauldwell'], ['Laura Madley', 'Orla Quirke', 'Parvati Patil', 'Eloise Midgeon', 'Zacharias Smith', 'Cormac McLaggen', 'Lisa Turpin', 'Demelza Robins', 'Ernie Macmillan', 'Millicent Bullstrode', 'Percy Weasley', 'Jimmy Peakes', 'Justin Finch-Fletchley', 'Miles Bletchley', 'Malcolm Baddock'], ['Marcus Belby', 'Euan Abercrombie', 'Vincent Crabbe', 'Ritchie Coote', 'Katie Bell', 'Terry Boot', 'Lavender Brown', 'Gregory Goyle', 'Marcus Flint', 'Dean Thomas', 'Jack Sloper', 'Rose Zeller', 'Stewart Ackerley', 'Fred Weasley', 'George Weasley', 'Romilda Vane', 'Alicia Spinnet', 'Kevin Whitby'], ['Friendly Friar', 'Grey Lady', 'Nearly Headless Nick', 'Bloody Baron']]
     """
+    student_file = open(filename)
 
-    all_students = []
     winter_16 = []
     spring_16 = []
     summer_16 = []
     fall_15 = []
     ghosts = []
 
+    for line in student_file:
+        line = line.rstrip()
+        words = line.split('|')
+        
+        first_name = words[0]
+        last_name = words[1]
+        name = first_name + " " + last_name
+        house_name = words[2]
+        house_advisor = words[3]
+        cohort = words[4]
+
+
+        if cohort == "Winter 2016":
+            winter_16.append(first_name + " " + last_name)
+        elif cohort == "Spring 2016":
+            spring_16.append(first_name + " " + last_name)
+        elif cohort == "Summer 2016":
+            summer_16.append(first_name + " " + last_name)
+        elif cohort == "Fall 2015":
+            fall_15.append(first_name + " " + last_name)
+        elif cohort == "G":
+            ghosts.append(first_name + " " + last_name)
+    
+        # winter_16 = [words[0]+" "+words[1] for student in words if words[4] == "Winter 2016"]
+        # spring_16 = [words[0]+" "+words[1] for student in words if words[4] == "Spring 2016"]
+        # summer_16 = [words[0]+" "+words[1] for student in words if words[4] == "Summer 2016"]
+        # fall_15 = [words[0]+" "+words[1] for student in words if words[4] == "Fall 2015"]
+        # ghosts = [words[0]+" "+words[1] for student in words if words[4] == "G"]
+
+
+    all_students = [fall_15]+[winter_16]+[spring_16]+[summer_16]+[ghosts]
+
     # Code goes here
 
-    return all_students
+    return all_students #set or list of lists
 
 
 def hogwarts_by_house(filename):
