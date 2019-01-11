@@ -1,9 +1,10 @@
 """Functions to parse a file containing student data."""
 
+filename = 'cohort_data.txt'
 
 def unique_houses(filename):
     """TODO: Return a set of student houses.
-
+ 
     Iterate over the cohort_data.txt file to look for all of the included house names
     and create a set called "houses" that holds those names.
 
@@ -13,8 +14,20 @@ def unique_houses(filename):
     ["Dumbledore's Army", 'Gryffindor', 'Hufflepuff', 'Ravenclaw', 'Slytherin']
 
     """
-
+    student_file = open(filename)
     houses = set()
+
+    for line in student_file:
+        line = line.rstrip()
+        words = line.split('|')
+        
+        first_name = words[0]
+        last_name = words[1]
+        house_name = words[2]
+        house_advisor = words[3]
+        cohort = words[4]
+        if house_name != '':
+            houses.add(house_name)
 
     # Code goes here
 
