@@ -21,11 +21,11 @@ def unique_houses(filename):
         line = line.rstrip()
         words = line.split('|')
         
-        first_name = words[0]
-        last_name = words[1]
+        # first_name = words[0]
+        # last_name = words[1]
         house_name = words[2]
-        house_advisor = words[3]
-        cohort = words[4]
+        # house_advisor = words[3]
+        # cohort = words[4]
         if house_name != '':
             houses.add(house_name)
 
@@ -54,6 +54,7 @@ def sort_by_cohort(filename):
     summer_16 = []
     fall_15 = []
     ghosts = []
+    all_students = []
 
     for line in student_file:
         line = line.rstrip()
@@ -62,21 +63,19 @@ def sort_by_cohort(filename):
         first_name = words[0]
         last_name = words[1]
         name = first_name + " " + last_name
-        house_name = words[2]
-        house_advisor = words[3]
         cohort = words[4]
 
 
         if cohort == "Winter 2016":
-            winter_16.append(first_name + " " + last_name)
+            winter_16.append(name)
         elif cohort == "Spring 2016":
-            spring_16.append(first_name + " " + last_name)
+            spring_16.append(name)
         elif cohort == "Summer 2016":
-            summer_16.append(first_name + " " + last_name)
+            summer_16.append(name)
         elif cohort == "Fall 2015":
-            fall_15.append(first_name + " " + last_name)
+            fall_15.append(name)
         elif cohort == "G":
-            ghosts.append(first_name + " " + last_name)
+            ghosts.append(name)
     
         # winter_16 = [words[0]+" "+words[1] for student in words if words[4] == "Winter 2016"]
         # spring_16 = [words[0]+" "+words[1] for student in words if words[4] == "Spring 2016"]
@@ -85,7 +84,11 @@ def sort_by_cohort(filename):
         # ghosts = [words[0]+" "+words[1] for student in words if words[4] == "G"]
 
 
-    all_students = [fall_15]+[winter_16]+[spring_16]+[summer_16]+[ghosts]
+    # all_students = [fall_15]+[winter_16]+[spring_16]+[summer_16]+[ghosts] 
+    # all_students.extend([fall_15]+[winter_16]+[spring_16]+[summer_16]+[ghosts])
+    all_students.extend((fall_15,winter_16,spring_16,summer_16,ghosts))
+    # sort was arbitrary in test creation
+    # can use extend
 
     # Code goes here
 
@@ -116,6 +119,34 @@ def hogwarts_by_house(filename):
     instructors = []
 
     # Code goes here
+    student_file = open(filename)
+
+    for line in student_file:
+        line = line.rstrip()
+        words = line.split('|')
+        
+        last_name = words[1]
+        house_name = words[2]
+        cohort = words[4]
+
+
+        if house_name == "Dumbledore's Army":
+            dumbledores_army.append(last_name)
+        elif house_name == "Gryffindor":
+            gryffindor.append(last_name)
+        elif house_name == "Hufflepuff":
+            hufflepuff.append(last_name)
+        elif house_name == "Ravenclaw":
+            ravenclaw.append(last_name)
+        elif house_name == "Slytherin":
+            slytherin.append(last_name)
+        elif cohort == "G":
+            ghosts.append(last_name)
+        elif cohort == "I":
+            instructors.append(last_name)
+
+    all_hogwarts.extend((sorted(dumbledores_army), sorted(gryffindor), sorted(hufflepuff)
+        , sorted(ravenclaw), sorted(slytherin), sorted(ghosts), sorted(instructors)))
 
     return all_hogwarts
 
@@ -134,6 +165,16 @@ def all_students_tuple_list(filename):
     """
 
     student_list = []
+
+    student_file = open(filename)
+
+    for line in student_file:
+        line = line.rstrip()
+        words = line.split('|')
+        house_name = words[2]
+
+        student = (word for word in words if house_name != "")
+        student_list.extend((student))
 
     # Code goes here
 
